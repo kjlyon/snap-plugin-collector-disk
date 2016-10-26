@@ -169,9 +169,6 @@ func (dc *DiskCollector) CollectMetrics(mts []plugin.MetricType) ([]plugin.Metri
 	}
 
 	first := dc.first // true if collecting for the first time
-	if first {
-		dc.first = false
-	}
 
 	// for first collecting skip stash previous data
 	if !first {
@@ -238,6 +235,10 @@ func (dc *DiskCollector) CollectMetrics(mts []plugin.MetricType) ([]plugin.Metri
 				log.Warning(fmt.Sprintf("Can not find static metric value for %s", m.Namespace().Strings()))
 			}
 		}
+	}
+
+	if first {
+		dc.first = false
 	}
 
 	return metrics, nil
